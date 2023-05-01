@@ -42,16 +42,14 @@ for i, server in enumerate(servers):
     url = splitter[0]
     loader = splitter[1]
 
-    try:
-        # ping the url to get the player count
-        with urllib.request.urlopen(f'https://api.mcsrvstat.us/2/{url}') as address:
-            results = json.loads(address.read().decode())
+    # ping the url to get the player count
+    with urllib.request.urlopen(f'https://api.mcsrvstat.us/2/{url}') as address:
+        results = json.loads(address.read().decode())
+    
+    player_count = 0
+    if 'players' in results:
         player_count = results['players']['online']
-        online_status = results['online']
-    except:
-        # if there was an error, set player count to 0 and online status to False
-        player_count = 0
-        online_status = False
+    online_status = results['online']
 
     print(f"{url} {loader} - {player_count} {online_status}")
 
